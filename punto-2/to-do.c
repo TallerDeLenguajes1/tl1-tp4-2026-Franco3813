@@ -38,14 +38,8 @@ Nodo *crearTarea(int id){
     return NuevaTarea;
 }
 void Insertar(Nodo **lista,Nodo *tarea){
-    if (*lista == NULL){
-        tarea->Siguiente = *lista;
-        *lista = tarea;
-    }else{
-        printf("La tarea ya a sido eliminada o no existe\n");
-    }
-    
-    
+    tarea->Siguiente = *lista;
+    *lista = tarea;
 }
 
 Nodo *Buscador(Nodo *pendiente,int idBuscado){
@@ -77,6 +71,20 @@ Nodo *QuitarNodo(Nodo **lista,int id){
     return nodoAux;
 }
 
+void mostrarLista(Nodo *lista){
+    Nodo *Aux = lista;
+
+    while (Aux != NULL){
+        printf("\nDescripcion de la tarea: %s",Aux->T.Descripcion);
+        printf("\nDuracion de la tarea: %d",Aux->T.Duracion);
+        printf("\nId de la tarea: %d",Aux->T.TareaID);
+        printf("\n------------------------");
+
+        Aux = Aux->Siguiente;
+    }
+    
+}
+
 
 int main(){
     int id = 1000,a,idbuscado;
@@ -96,14 +104,16 @@ int main(){
     do{
         printf("Ingrese el id la tarea completada: ");
         scanf("%d",&idbuscado);
-        buscado = Buscador(pendiente,idbuscado);
+        buscado = QuitarNodo(&pendiente,idbuscado);
         Insertar(&realizada,buscado);
-        QuitarNodo(&pendiente,idbuscado);
+        
         printf("Desea agregar otra tarea?\n1)no \n2)si \nrespuesta: ");
         scanf("%d",&a);
-
     } while (a == 2);
     
-    
-
+    printf("\nLista de las tareas pendientes");
+    mostrarLista(pendiente);
+    printf("\n");
+    printf("\nLista de las tareas realizadas");
+    mostrarLista(realizada);
 }
