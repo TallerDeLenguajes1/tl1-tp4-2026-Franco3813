@@ -134,6 +134,18 @@ void BuscardorPorPalabra(Nodo *lista,Nodo *lista2, char *frase){
     
 }
 
+void liberarLista(Nodo *lista){
+    Nodo *aux;
+
+    while(lista != NULL){
+        aux = lista;
+        lista = lista->Siguiente;
+
+        free(aux->T.Descripcion);
+        free(aux);
+    }
+}
+
 
 int main(){
     int id = 1000,a,idbuscado,b,c;
@@ -181,5 +193,7 @@ int main(){
         scanf("%d",&c);
         BuscadorPorId(pendiente,realizada,c);
     }
-    
+
+    liberarLista(pendiente);
+    liberarLista(realizada);
 }
